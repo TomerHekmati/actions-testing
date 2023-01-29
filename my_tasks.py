@@ -48,9 +48,9 @@ def set_min_redis_pack_version(module_version, module_name):
 )
 def set_permutations(
     # module_options = None,
-    pytest_optionssss = None,
+    pytest_options = None,
 ):
     # print(module_options)
-    print(pytest_optionssss)
+    print(pytest_options)
     # mini_cluster_version = set_min_redis_pack_version()
 
