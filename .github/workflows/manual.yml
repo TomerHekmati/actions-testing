@@ -31,7 +31,6 @@ jobs:
       - name: poetry install
         run: |
           pip install --upgrade pip invoke
-          invoke resthack
     
       # Runs a single command using the runners shell
       - name: Run the task
