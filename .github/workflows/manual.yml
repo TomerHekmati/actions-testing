@@ -38,6 +38,6 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id}}
         run: |
-            ls
+            ls;pwd
       # invoke -c ../../my_tasks set-permutations --module_options="${{ inputs.module_options }}" --pytest_options="${{ inputs.pytest_options }}"
 # -r?
