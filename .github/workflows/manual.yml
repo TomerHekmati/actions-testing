@@ -35,5 +35,4 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run the task
         run: |
-            invoke set-permutations --module_options="${{ inputs.module_options }}" \
-              --pytest_options="${{ inputs.pytest_options }}"
+            invoke -c tasks set-permutations --module_options="${{ inputs.module_options }}" --pytest_options="${{ inputs.pytest_options }}"
