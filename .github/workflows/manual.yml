@@ -31,8 +31,6 @@ jobs:
       - name: poetry install
         run: |
           pip install --upgrade pip poetry tox
-          poetry config virtualenvs.create false
-          poetry install
           invoke resthack
     
       # Runs a single command using the runners shell
