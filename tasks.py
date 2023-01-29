@@ -27,7 +27,7 @@ def set_min_redis_pack_version(module_version, module_name):
     elif 'RedisearchLight' in module_name:
         pack = 'pack/'
     version = module_version
-    if version is not 'master':
+    if version != 'master':
         version = 'v'+version
     url = f'https://raw.githubusercontent.com/{url_folder_map[module_name]}/{url_folder_map[module_name]}/{version}/{pack}{ramp_file}'
     page = urlopen(url)
