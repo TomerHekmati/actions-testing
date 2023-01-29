@@ -47,8 +47,8 @@ def set_min_redis_pack_version(module_version, module_name):
     }
 )
 def set_permutations(
-    module_options,
-    pytest_options,
+    module_options = None,
+    pytest_options = None,
 ):
     print(module_options)
     print(pytest_options)
