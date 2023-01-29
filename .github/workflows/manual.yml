@@ -1,30 +1,32 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Release workflow
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
+      module_options:
+        description: "Key value pairs of configuration options"
         required: true
+        type: string
+      pytest_options:
+        description: "pytest markers, use it to choose which module to test, for example: '-m json' to test rejson"
+        required: true
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
+  # This workflow contains a single job called "test"
+  test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: Run the task
+      run: |
+          invoke -c tasks set-permutations --module_options="${{ inputs.module_options }}" \
+            --pytest_options="${{ inputs.pytest_options }}"
