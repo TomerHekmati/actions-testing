@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       module_options:
-        description: "Key value pairs of configuration options"
+        description: "Key value pairs of configuration options, for example: REDISEARCH_VERSION = '2.4.16' "
         required: true
         type: string
       pytest_options:
-        description: "pytest markers, use it to choose which module to test, for example: '-m json' to test rejson"
+        description: "pytest markers, use it to choose which module to test, for example: -m search "
         required: true
         type: string
 
@@ -25,8 +25,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Run the task
-      run: |
-          invoke set-permutations --module_options="${{ inputs.module_options }}" \
-            --pytest_options="${{ inputs.pytest_options }}"
+      - name: install python
+        uses: actions/setup-python@v4
+
+      - name: poetry install
+        run: |
+          pip install --upgrade pip poetry tox
+          poetry config virtualenvs.create false
+          poetry install
+          invoke resthack
+    
+      # Runs a single command using the runners shell
+      - name: Run the task
+        run: |
+            invoke set-permutations --module_options="${{ inputs.module_options }}" \
+              --pytest_options="${{ inputs.pytest_options }}"
