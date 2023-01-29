@@ -25,8 +25,32 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v3
+
+      # # this is the workaround to the maximum number of inputs for dispatch
+      # - name: configure dotenv
+      #   run: |
+      #     for i in `echo ${{inputs.module_options}}`; do
+      #       echo $i >> .env
+      #     done
+      #     echo "AWS_ACCESS_KEY=${{ secrets.CTO_AUTOMATION_AWS_ACCESS_KEY }}" >> .env
+      #     echo "AWS_SECRET_KEY=${{ secrets.CTO_AUTOMATION_AWS_SECRET_KEY }}" >> .env
+
       - name: install python
         uses: actions/setup-python@v4
+      # - name: cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     key: baseline-${{ hashFiles('pyproject.toml') }}
+      #     path:
+      #       ~/.cache/pip
+      #       ~/.cache/pypoetry
+      - name: download lfs dependencies
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
 
       - name: invoke install
         run: |
