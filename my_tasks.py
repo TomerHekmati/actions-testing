@@ -53,5 +53,6 @@ def set_permutations(
 ):
     print(module_options)
     print(pytest_options)
-    # mini_cluster_version = set_min_redis_pack_version()
+    min_cluster_version = set_min_redis_pack_version()
+    print(min_cluster_version)
 
