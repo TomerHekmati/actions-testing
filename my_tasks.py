@@ -41,16 +41,17 @@ def set_min_redis_pack_version(module_version, module_name):
     return pack_version
 
 @task(
-    # help={
-    #     # "module_options": "The .env parameters, should be include something like: REDISEARCH_VERSION = '2.4.16' ",
-    #     "pytest_options": "The markers to choose the module we are testing",
-    # }
+    help={
+        "module_options": "The .env parameters, should be include something like: REDISEARCH_VERSION = '2.4.16' ",
+        "pytest_options": "The markers to choose the module we are testing",
+    }
 )
 def set_permutations(
-    # module_options = None,
+    c,
+    module_options = None,
     pytest_options = None,
 ):
-    # print(module_options)
+    print(module_options)
     print(pytest_options)
     # mini_cluster_version = set_min_redis_pack_version()
 
