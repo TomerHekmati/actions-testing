@@ -7,13 +7,17 @@ name: Release workflow
 on:
   workflow_dispatch:
     inputs:
-      module_options:
-        description: "Key value pairs of configuration options, for example: REDISEARCH_VERSION = '2.4.16' "
+      module_name:
+        description: "Redis module name"
         required: true
         type: string
-      pytest_options:
-        description: "pytest markers, use it to choose which module to test, for example: -m search "
+      module_version:
+        description: "The module version"
         required: true
+        type: string
+      module_url:
+        description: "URL to download the module"
+        required: false
         type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
