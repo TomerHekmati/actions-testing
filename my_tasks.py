@@ -6,6 +6,14 @@ from invoke import task
 import yaml
 
 
+def version_format_refactor(version):
+    # received format of x.y.z (str)
+    # return format of xnymz (int)
+    l = [int(x, 10) for x in version.split('.')]
+    l.reverse()
+    version = sum(x * (100 ** i) for i, x in enumerate(l))
+    return version
+
 def set_min_redis_pack_version(module_version, module_name):
     url_folder_map = {'json': 'RedisJSON',
                         'graph': 'RedisGraph',
@@ -57,17 +65,27 @@ def set_permutations(
     print(module_name)
     print(module_version)
     min_cluster_version = set_min_redis_pack_version(module_version, module_name)
-    print(min_cluster_version)
+    print(f'Minimum cluster version the module support: {min_cluster_version}')
 
     with open('parameters.yaml') as file:
         documents = yaml.full_load(file)
-        os_dict = documents['OS_DICT']
+        os_s = documents['OS']
         rs_versions = documents['RS_VERSIONS']
         os_supported_by_modules = documents['OS_SUPPORTED_BY_MODULES']
-    
-    chosen_os_list = []
-    for os in os_dict:
-        print(os)
+
+    # list of OSs:
+    print(os_s)
+    # list of cluster versions:
+    cluster_versions = []
+    for rs_ver in rs_versions:
+        if version_format_refactor(rs_ver) >= version_format_refactor(min_cluster_version):
+            print(rs_ver)
+            cluster_versions.append(rs_ver)
+    print(f'Final cluster versions to test: {cluster_versions}')
+    return cluster_versions
+    # chosen_os_list = []
+    # for os in os_s:
+    #     print(os)
     #     chosen_os_list.append(os)
     # print('chosen_os_list after adding it automatically:')
     # print(self.chosen_os_list)

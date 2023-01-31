@@ -1,0 +1,189 @@
+# OS:
+#   'xenial': 'xenial-amd64-aws'
+#   'bionic': 'bionic-amd64-aws'
+#   'focal': 'focal-amd64-aws'
+#   'rhel7': 'rhel7.5-x86_64-aws'
+#   'rhel8': 'rhel8-x86_64-aws'
+OS:
+  - 'xenial'
+  - 'bionic'
+  - 'focal'
+  - 'rhel7'
+  - 'rhel8'
+
+RS_VERSIONS:
+  '100.0.0':
+    'build': '2988'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+  '6.4.2':
+    'build': '8'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+  '6.4.0':
+    'build': '48'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+  '6.2.18':
+    'build': '49'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+  '6.2.12':
+    'build': '82'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+  '6.2.10':
+    'build': '129'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+  '6.2.8':
+    'build': '53'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+  '6.2.4':
+    'build': '54'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+  '6.0.20':
+    'build': '101'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+  '6.0.12':
+    'build': '58'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+  '6.0.8':
+    'build': '32'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+  '6.0.6':
+    'build': '39'
+    'supported_os':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+
+OS_SUPPORTED_BY_MODULES:
+  'ReJSON':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisGraph':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisTS':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'ReBloom':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'Cuckoo':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'TopK':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'CountMinSketch':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisGears':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RediSearchEnterprise':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisearchLight':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'focal'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisAI':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+
+  'RedisAILight':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'

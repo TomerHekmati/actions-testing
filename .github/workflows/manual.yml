@@ -29,6 +29,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Random supported OS choice
+        id: random_os
+        run: |
+          for i in bionic focal rhel7 rhel8 xenial; do echo $i; done | shuf|head -n 1 > oschoice.txt
+
       - uses: actions/checkout@v3
 
       # # this is the workaround to the maximum number of inputs for dispatch
@@ -66,8 +71,12 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id}}
         run: |
-          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}"
-
+          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" ; echo Hello there
+        # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
+        run: |
+          echo Hello there
+          cat parameters_results.txt
+          echo "OSCHOICE=`cat parameters_results.txt`" >> $GITHUB_OUTPUT
 # invoke -c my_tasks set-permutations 
 # invoke -c my_tasks set-permutations --module-options="${{ inputs.module_options }}" --pytest-options="${{ inputs.pytest_options }}"
 # -r?
