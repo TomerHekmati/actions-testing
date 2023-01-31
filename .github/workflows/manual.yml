@@ -47,9 +47,9 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: Display OS choice
+      - name: Display ls
         run: |
-          cat oschoice.txt
+          ls;pwd
 
       # # this is the workaround to the maximum number of inputs for dispatch
       # - name: configure dotenv
