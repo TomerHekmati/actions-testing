@@ -36,6 +36,10 @@ jobs:
       - name: Display OS choice
         run: |
           cat oschoice.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: oschoice.txt
+          path: oschoice.txt
 
       - uses: actions/checkout@v3
 
