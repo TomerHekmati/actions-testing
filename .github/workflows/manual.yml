@@ -41,7 +41,15 @@ jobs:
           name: oschoice.txt
           path: oschoice.txt
 
+      - name: Display OS choice
+        run: |
+          cat oschoice.txt
+
       - uses: actions/checkout@v3
+
+      - name: Display OS choice
+        run: |
+          cat oschoice.txt
 
       # # this is the workaround to the maximum number of inputs for dispatch
       # - name: configure dotenv
@@ -54,6 +62,11 @@ jobs:
 
       - name: install python
         uses: actions/setup-python@v4
+
+      - name: Display OS choice
+        run: |
+          cat oschoice.txt
+
       # - name: cache
       #   uses: actions/cache@v3
       #   with:
@@ -80,6 +93,10 @@ jobs:
         run: |
           invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" ; echo Hello there ; cat oschoice.txt
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
+      
+      - name: Display OS choice
+        run: |
+          cat oschoice.txt
         # run: |
         #   echo Hello there
         #   cat parameters_results.txt
