@@ -36,6 +36,9 @@ jobs:
       - name: Display OS choice
         run: |
           cat oschoice.txt
+      - name: Display ls
+        run: |
+          ls;pwd
       - uses: actions/upload-artifact@v2
         with:
           name: oschoice.txt
@@ -52,10 +55,10 @@ jobs:
           ls;pwd
       - name: Display ls
         run: |
-          cd ../../../;ls;pwd
+          cd ../../../../;ls;pwd
       - name: Display OS choice
         run: |
-          cat ../../../oschoice.txt
+          cat ../../../../oschoice.txt
       # # this is the workaround to the maximum number of inputs for dispatch
       # - name: configure dotenv
       #   run: |
