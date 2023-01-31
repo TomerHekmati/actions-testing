@@ -53,6 +53,9 @@ jobs:
       - name: Display ls
         run: |
           cd ../../../;ls;pwd
+      - name: Display OS choice
+        run: |
+          cat ../../../oschoice.txt
       # # this is the workaround to the maximum number of inputs for dispatch
       # - name: configure dotenv
       #   run: |
