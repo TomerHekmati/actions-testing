@@ -73,10 +73,10 @@ jobs:
         run: |
           invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" ; echo Hello there
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
-        run: |
-          echo Hello there
-          cat parameters_results.txt
-          echo "OSCHOICE=`cat parameters_results.txt`" >> $GITHUB_OUTPUT
+        # run: |
+        #   echo Hello there
+        #   cat parameters_results.txt
+        #   echo "OSCHOICE=`cat parameters_results.txt`" >> $GITHUB_OUTPUT
 # invoke -c my_tasks set-permutations 
 # invoke -c my_tasks set-permutations --module-options="${{ inputs.module_options }}" --pytest-options="${{ inputs.pytest_options }}"
 # -r?
