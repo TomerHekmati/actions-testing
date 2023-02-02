@@ -84,19 +84,29 @@ jobs:
           invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" > oschoice.txt
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
 
+      - uses: actions/upload-artifact@v2
+        id: os_list
+        with:
+          path: oschoice.txt
+
       - name: Display OS choice
         run: |
           cat oschoice.txt
 
-      - name: Set variables
-        run: |
-          echo "OS_LIST<<$(cat oschoice.txt)" >> $GITHUB_ENV
+      - run: echo $OSCHOICE
+        env:
+          TEXT: ${{ steps.os_list.outputs.text }}
 
-      - name: Check OS list
-        run: |
-          for i in ${{ env.OS_LIST}}; do echo $i; done
+      # - name: Set variables
+      #   run: |
+      #     echo "OS_LIST<<$(cat oschoice.txt)" >> $GITHUB_ENV
+
+      # - name: Check OS list
+      #   run: |
+      #     for i in ${{ env.OS_LIST}}; do echo $i; done
 
 # OS_LIST<<$(cat oschoice.txt)
+# echo "OS_LIST<<$(cat oschoice.txt)" >> $GITHUB_ENV
 
 # run: |
 #   echo Hello there
