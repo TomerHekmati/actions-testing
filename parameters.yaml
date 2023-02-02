@@ -13,7 +13,7 @@ OS:
 
 RS_VERSIONS:
   '100.0.0':
-    'build': '2988'
+    'build': '3026'
     'supported_os':
       - 'xenial'
       - 'bionic'
@@ -21,7 +21,7 @@ RS_VERSIONS:
       - 'rhel7'
       - 'rhel8'
   '6.4.2':
-    'build': '8'
+    'build': '16'
     'supported_os':
       - 'xenial'
       - 'bionic'
@@ -36,7 +36,7 @@ RS_VERSIONS:
       - 'rhel7'
       - 'rhel8'
   '6.2.18':
-    'build': '49'
+    'build': '65'
     'supported_os':
       - 'xenial'
       - 'bionic'

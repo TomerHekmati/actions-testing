@@ -29,36 +29,22 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Random supported OS choice
-        id: random_os
-        run: |
-          for i in bionic focal rhel7 rhel8 xenial; do echo $i; done | shuf|head -n 1 > oschoice.txt
-      - name: Display OS choice
-        run: |
-          cat oschoice.txt
-      - name: Display ls
-        run: |
-          ls;pwd
-      - uses: actions/upload-artifact@v2
-        with:
-          name: oschoice.txt
-          path: oschoice.txt
-
-      - name: Display OS choice
-        run: |
-          cat oschoice.txt
+      # - name: Random supported OS choice
+      #   id: random_os
+      #   run: |
+      #     for i in bionic focal rhel7 rhel8 xenial; do echo $i; done | shuf|head -n 1 > oschoice.txt
+      # - name: Display OS choice
+      #   run: |
+      #     cat oschoice.txt
+      # - name: Display ls
+      #   run: |
+      #     ls;pwd
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: oschoice.txt
+      #     path: oschoice.txt
 
       - uses: actions/checkout@v3
-
-      - name: Display ls
-        run: |
-          ls;pwd
-      - name: Display ls
-        run: |
-          cd ../../../../;ls;pwd
-      - name: Display OS choice
-        run: |
-          cat ../../../../oschoice.txt
       # # this is the workaround to the maximum number of inputs for dispatch
       # - name: configure dotenv
       #   run: |
@@ -70,10 +56,6 @@ jobs:
 
       - name: install python
         uses: actions/setup-python@v4
-
-      - name: Display OS choice
-        run: |
-          cat oschoice.txt
 
       # - name: cache
       #   uses: actions/cache@v3
@@ -99,16 +81,20 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id}}
         run: |
-          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" ; echo Hello there ; cat oschoice.txt
+          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" > oschoice.txt
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
-      
-      - name: Display OS choice
+
+      - name: Set variables
         run: |
-          cat oschoice.txt
-        # run: |
-        #   echo Hello there
-        #   cat parameters_results.txt
-        #   echo "OSCHOICE=`cat parameters_results.txt`" >> $GITHUB_OUTPUT
+          OS_LIST=$(cat oschoice.txt)
+          echo "OS_LIST_=$OS_LIST" >> $GITHUB_ENV
+      - name: Check OS list
+        run: |
+          for i in ${{ env.VERSION }}; do echo $i; done
+# run: |
+#   echo Hello there
+#   cat parameters_results.txt
+#   echo "OSCHOICE=`cat parameters_results.txt`" >> $GITHUB_OUTPUT
 # invoke -c my_tasks set-permutations 
 # invoke -c my_tasks set-permutations --module-options="${{ inputs.module_options }}" --pytest-options="${{ inputs.pytest_options }}"
 # -r?

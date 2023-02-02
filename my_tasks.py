@@ -62,10 +62,10 @@ def set_permutations(
     module_version = None,
     module_url = None,
 ):
-    print(module_name)
-    print(module_version)
+    # print(module_name)
+    # print(module_version)
     min_cluster_version = set_min_redis_pack_version(module_version, module_name)
-    print(f'Minimum cluster version the module support: {min_cluster_version}')
+    # print(f'Minimum cluster version the module support: {min_cluster_version}')
 
     with open('parameters.yaml') as file:
         documents = yaml.full_load(file)
@@ -74,15 +74,15 @@ def set_permutations(
         os_supported_by_modules = documents['OS_SUPPORTED_BY_MODULES']
 
     # list of OSs:
-    print(os_s)
+    # print(os_s)
     # list of cluster versions:
     cluster_versions = []
     for rs_ver in rs_versions:
         if version_format_refactor(rs_ver) >= version_format_refactor(min_cluster_version):
             print(rs_ver)
             cluster_versions.append(rs_ver)
-    print(f'Final cluster versions to test: {cluster_versions}')
-    return cluster_versions
+    # print(f'Final cluster versions to test: {cluster_versions}')
+    # return cluster_versions
     # chosen_os_list = []
     # for os in os_s:
     #     print(os)
