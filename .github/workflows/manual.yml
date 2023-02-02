@@ -95,7 +95,7 @@ jobs:
 
       - run: echo $OSCHOICE
         env:
-          OSCHOICE: ${{ steps.os_list.outputs.oschoice.txt }}
+          OSCHOICE: ${{ steps.os_list.oschoice.txt }}
 # worked! _> OSCHOICE: "I am tomer"
 # ${{ steps.os_list.outputs.oschoice }}
       # - name: Set variables
