@@ -84,10 +84,15 @@ jobs:
           invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" > oschoice.txt
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
 
+      - name: Display OS choice
+        run: |
+          cat oschoice.txt
+
       - name: Set variables
         run: |
           OS_LIST=$(cat oschoice.txt)
-          echo "OS_LIST_=$OS_LIST" >> $GITHUB_ENV
+          echo "OS_LIST_<<$OS_LIST" >> $GITHUB_ENV
+
       - name: Check OS list
         run: |
           for i in ${{ env.VERSION }}; do echo $i; done
