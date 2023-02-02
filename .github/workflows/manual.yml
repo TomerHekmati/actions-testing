@@ -90,7 +90,7 @@ jobs:
 
       - name: Set variables
         run: |
-          OS_LIST=$(cat oschoice.txt)
+          OS_LIST<<$(cat oschoice.txt)
           echo "OS_LIST_<<$OS_LIST" >> $GITHUB_ENV
 
       - name: Check OS list
