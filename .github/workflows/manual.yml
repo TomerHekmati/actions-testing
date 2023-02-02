@@ -95,8 +95,8 @@ jobs:
 
       - run: echo $OSCHOICE
         env:
-          OSCHOICE: ${{ steps.os_list.outputs.oschoice }}
-
+          OSCHOICE: "I am tomer"
+# ${{ steps.os_list.outputs.oschoice }}
       # - name: Set variables
       #   run: |
       #     echo "OS_LIST<<$(cat oschoice.txt)" >> $GITHUB_ENV
