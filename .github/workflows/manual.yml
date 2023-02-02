@@ -95,7 +95,7 @@ jobs:
 
       - run: echo $OSCHOICE
         env:
-          TEXT: ${{ steps.os_list.outputs.text }}
+          OSCHOICE: ${{ steps.os_list.outputs.oschoice }}
 
       # - name: Set variables
       #   run: |
