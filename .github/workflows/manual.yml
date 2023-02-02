@@ -81,21 +81,30 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id}}
         run: |
-          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" > oschoice.txt
+          invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" > oschoice
         # invoke -c my_tasks set-permutations --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" | shuf|head -n 1 > parameters_results.txt
 
-      - uses: actions/upload-artifact@v2
-        id: os_list
-        with:
-          path: oschoice.txt
+      # - uses: actions/upload-artifact@v2
+      #   id: os_list
+      #   with:
+      #     path: oschoice.txt
 
-      - name: Display OS choice
-        run: |
-          cat oschoice.txt
+      # - run: echo $OSCHOICE
+        # env:
+          # OSCHOICE: ${{ steps.os_list.oschoice.txt }}
+
+      # - name: Display OS choice
+      #   run: |
+      #     cat oschoice.txt
+
+      - name: Read OS file
+        id: os_list
+        run: echo "::set-output name=os::$(cat oschoice)"
 
       - run: echo $OSCHOICE
         env:
-          OSCHOICE: ${{ steps.os_list.oschoice.txt }}
+          OSCHOICE: ${{ steps.os_list.outputs.os }}
+
 # worked! _> OSCHOICE: "I am tomer"
 # ${{ steps.os_list.outputs.oschoice }}
       # - name: Set variables
