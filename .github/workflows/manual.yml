@@ -90,12 +90,14 @@ jobs:
 
       - name: Set variables
         run: |
-# OS_LIST<<$(cat oschoice.txt)
           echo "OS_LIST<<$(cat oschoice.txt)" >> $GITHUB_ENV
 
       - name: Check OS list
         run: |
           for i in ${{ env.OS_LIST}}; do echo $i; done
+
+# OS_LIST<<$(cat oschoice.txt)
+
 # run: |
 #   echo Hello there
 #   cat parameters_results.txt
