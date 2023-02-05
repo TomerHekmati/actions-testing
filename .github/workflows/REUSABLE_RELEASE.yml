@@ -77,7 +77,7 @@ jobs:
         run: |
           echo We can run tests
       - name: check
-        if  ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true'}}
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true'}}
         run: |
           echo check is done
       # - name: star the cluster
