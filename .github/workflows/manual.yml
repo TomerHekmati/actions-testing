@@ -99,13 +99,15 @@ jobs:
 
       - name: Read OS file
         id: os_list
-        run: echo "{os}<<${(cat oschoice)}" >> $GITHUB_OUTPUT
+        run: echo "os=`cat oschoice`" >> $GITHUB_OUTPUT
 
       - run: echo $OSCHOICE
         env:
           OSCHOICE: ${{ steps.os_list.outputs.os }}
       
       - run: ${{ env.os }}
+
+# from working repo: "OSCHOICE=`cat oschoice.txt`" >> $GITHUB_OUTPUT
 
 # worked! _> OSCHOICE: "I am tomer"
 # ${{ steps.os_list.outputs.oschoice }}
