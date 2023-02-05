@@ -73,7 +73,7 @@ jobs:
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
       - name: run
-        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == "True" && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == "True" && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == "True"}}
+        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == True && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == True && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == True}}
         run: |
           echo We can run tests
       # - name: star the cluster
