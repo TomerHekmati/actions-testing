@@ -94,3 +94,18 @@ def set_permutations(
     #     self.chosen_rs_versions.append(rs_version)
     # print('chosen_rs_versions after adding it automatically:')
     # print(self.chosen_rs_versions)
+
+@task(
+    help={
+        "cluster_version": "The cluster version",
+    }
+)
+def get_cluster_version_build(
+    c,
+    cluster_version = None,
+):
+    # TODO change this hard coded builds numbers into autonatic check on jenkins promoted versions job
+    with open("parameters.yaml") as file:
+        parameters = yaml.full_load(file)
+        cluster_version = parameters["RS_VERSIONS"][cluster_version]["build"]
+        print(cluster_version)
