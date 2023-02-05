@@ -39,9 +39,6 @@ jobs:
       # somehow get his from s3 || jenkins || whatever
       - name: get build number for cluster ${{inputs.cluster_version}}
         id: build_number
-        env:
-          REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id}}
         run: |
           echo 'BUILD_NUMBER=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
       - name: EXAMPLE get build number
@@ -49,9 +46,6 @@ jobs:
 
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
-        env:
-          REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id}}
         run: |
           echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
           echo "HERE I FIND OUT IF I AM RELEASED FOR ${{inputs.os}}"
