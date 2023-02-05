@@ -1,8 +1,9 @@
----
+name: Release
 
 on:
 
   workflow_call:
+    inputs:
       os:
         description: "operating system for the redis cluster"
         required: true
