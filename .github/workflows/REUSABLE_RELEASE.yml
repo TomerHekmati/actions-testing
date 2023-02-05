@@ -79,37 +79,38 @@ jobs:
       #   if: ${{steps.os_supported.outputs.OS_SUPPORTED == "YES" && steps.....}}
       #   run:
 
-#       - name: run
-#         if: ${{steps.supported.outputs.FULLY_SUPPORTED = 'yes'}}
-#         run: |
-#           echo
-#       - name: star the cluster
-# # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
-#         run: |
-#           invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
-#             --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
-#             --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
-#             --public-ssh-key-path="./ssh.publickey" \
-#             --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
-#             --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
-#             --os=${{inputs.os}}
+      - name: run
+        if: ${{ steps.os_supported.outputs.OS_SUPPORTED = "True" && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS = "True" && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER = "True"}}
+        run: |
+          echo We can run tests
+      # - name: star the cluster
+# example line from chayim
+# run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
+      #   run: |
+      #     invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
+      #       --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
+      #       --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
+      #       --public-ssh-key-path="./ssh.publickey" \
+      #       --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
+      #       --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
+      #       --os=${{inputs.os}}
 
-#       - name: Display cluster connection details
-#         if: ${{ inputs.ci == false }}
-#         run: |
-#           invoke -c env0_tasks env-details
+      # - name: Display cluster connection details
+      #   if: ${{ inputs.ci == false }}
+      #   run: |
+      #     invoke -c env0_tasks env-details
 
-#       - name: Validate cluster ssh
-#         if: ${{ inputs.ci == false }}
-#         run: |
-#           md5sum ssh.privatekey
-#           ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .cluster_name.value) ls
-#           ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .public_ips.value[0]) ls
+      # - name: Validate cluster ssh
+      #   if: ${{ inputs.ci == false }}
+      #   run: |
+      #     md5sum ssh.privatekey
+      #     ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .cluster_name.value) ls
+      #     ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .public_ips.value[0]) ls
 
-#       - name: run the tests
-#         if: ${{ inputs.report == false && inputs.ci == false }}
-#         run: |
-#           invoke -c env0_tasks run-tests --ssh-private-key=ssh.privatekey \
-#             --pytest-options "${{ inputs.pytest_options}}" \
-#             --aws-access-key=${{ secrets.CTO_AUTOMATION_AWS_ACCESS_KEY }} \
-#             --aws-secret-key=${{ secrets.CTO_AUTOMATION_AWS_SECRET_KEY }}
+      # - name: run the tests
+      #   if: ${{ inputs.report == false && inputs.ci == false }}
+      #   run: |
+      #     invoke -c env0_tasks run-tests --ssh-private-key=ssh.privatekey \
+      #       --pytest-options "${{ inputs.pytest_options}}" \
+      #       --aws-access-key=${{ secrets.CTO_AUTOMATION_AWS_ACCESS_KEY }} \
+      #       --aws-secret-key=${{ secrets.CTO_AUTOMATION_AWS_SECRET_KEY }}
