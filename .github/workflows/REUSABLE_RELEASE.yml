@@ -44,17 +44,16 @@ jobs:
           RUN_ID: ${{ github.run_id}}
         run: |
           echo 'BUILD_NUMBER=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
-# invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}"
-
-      - name: check output
+      - name: EXAMPLE get build number
         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
-# run: echo ${{ steps.build_number.outputs.stdout }}
 
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          echo OS_SUPPORTED=yes >> $GITHUB_OUTPUT
+          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
           echo "HERE I FIND OUT IF I AM RELEASED FOR ${{inputs.os}}"
+      - name: EXAMPLE get os_supported
+        run: echo ${{ steps.build_number.outputs.OS_SUPPORTED }}
 
       # run the python script, it should exit 0 || 1
       - name: determine if we can test this module on this cluster version

@@ -108,5 +108,20 @@ def get_cluster_version_build(
     with open("parameters.yaml") as file:
         parameters = yaml.full_load(file)
         cluster_version = parameters["RS_VERSIONS"][cluster_version]["build"]
-        # print(cluster_version)
         run(f"echo {cluster_version}", pty=True)
+
+@task(
+    help={
+        "os": "The OS nickname",
+        "cluster_version": "The cluster version"
+    }
+)
+def determine_cluster_support_os(
+    c,
+    os = None,
+    cluster_version = None,
+):
+    with open("parameters.yaml") as file:
+        parameters = yaml.full_load(file)
+        supported = True if os in parameters["RS_VERSIONS"][cluster_version]["supported_os"] else False
+        run(f"echo {supported}", pty=True)
