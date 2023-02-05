@@ -95,7 +95,7 @@ RS_VERSIONS:
       - 'rhel7'
 
 OS_SUPPORTED_BY_MODULES:
-  'ReJSON':
+  'json':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -103,7 +103,7 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'RedisGraph':
+  'graph':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -111,7 +111,7 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'RedisTS':
+  'timeseries':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -119,7 +119,7 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'ReBloom':
+  'bloom':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -127,7 +127,14 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'Cuckoo':
+  'gears':
+    'os_supported':
+      - 'xenial'
+      - 'bionic'
+      - 'rhel7'
+      - 'rhel8'
+
+  'search':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -135,7 +142,7 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'TopK':
+  'searchlight':
     'os_supported':
       - 'xenial'
       - 'bionic'
@@ -143,45 +150,14 @@ OS_SUPPORTED_BY_MODULES:
       - 'rhel7'
       - 'rhel8'
 
-  'CountMinSketch':
-    'os_supported':
-      - 'xenial'
-      - 'bionic'
-      - 'focal'
-      - 'rhel7'
-      - 'rhel8'
-
-  'RedisGears':
+  'ai':
     'os_supported':
       - 'xenial'
       - 'bionic'
       - 'rhel7'
       - 'rhel8'
 
-  'RediSearchEnterprise':
-    'os_supported':
-      - 'xenial'
-      - 'bionic'
-      - 'focal'
-      - 'rhel7'
-      - 'rhel8'
-
-  'RedisearchLight':
-    'os_supported':
-      - 'xenial'
-      - 'bionic'
-      - 'focal'
-      - 'rhel7'
-      - 'rhel8'
-
-  'RedisAI':
-    'os_supported':
-      - 'xenial'
-      - 'bionic'
-      - 'rhel7'
-      - 'rhel8'
-
-  'RedisAILight':
+  'ailight':
     'os_supported':
       - 'xenial'
       - 'bionic'

@@ -125,3 +125,19 @@ def determine_cluster_support_os(
         parameters = yaml.full_load(file)
         supported = True if os in parameters["RS_VERSIONS"][cluster_version]["supported_os"] else False
         run(f"echo {supported}", pty=True)
+
+@task(
+    help={
+        "os": "The OS nickname",
+        "module_name": "The module version"
+    }
+)
+def determine_module_support_os(
+    c,
+    os = None,
+    module_name = None,
+):
+    with open("parameters.yaml") as file:
+        parameters = yaml.full_load(file)
+        supported = True if os in parameters["OS_SUPPORTED_BY_MODULES"][module_name]["os_supported"] else False
+        run(f"echo {supported}", pty=True)
