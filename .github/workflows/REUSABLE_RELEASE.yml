@@ -26,6 +26,9 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
+      - name: invoke install
+        run: |
+          pip install --upgrade pip invoke
 
       # somehow get his from s3 || jenkins || whatever
       - name: get build number for cluster ${{inputs.cluster_version}}
