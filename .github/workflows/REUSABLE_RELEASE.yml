@@ -31,7 +31,7 @@ jobs:
       - name: get build number for cluster ${{inputs.cluster_version}}
         id: build_number
         run: |
-          echo 'BUILD_NUMBER=$(invoke -c my_tasks set-permutations --cluster_version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
+          echo 'BUILD_NUMBER=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
 
       - name: check output
         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
