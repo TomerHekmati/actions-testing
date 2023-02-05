@@ -26,6 +26,13 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
+      - name: echo all the things
+        run: |
+          echo ${{inputs.os}} is the OS
+          echo ${{inputs.cluster_version}} is the cluster_version
+          echo ${{inputs.module_version}} is the module_version
+          echo ${{inputs.module_name}} is the module_name
+
       - name: download lfs dependencies
         uses: actions/checkout@v3
         with:
@@ -51,13 +58,20 @@ jobs:
       - name: EXAMPLE get os_supported
         run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
-      # run the python script, it should exit 0 || 1
-      - name: determine if ${{inputs.os}} support for ${{inputs.module_name}}
-        id: module_supported
+      - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
+        id: module_supported_os
         run: |
-          echo 'MODULE_SUPPORTED=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
-      - name: EXAMPLE get module_supported
-        run: echo ${{ steps.module_supported.outputs.MODULE_SUPPORTED }}
+          echo 'MODULE_SUPPORTED_OS=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+      - name: EXAMPLE get module_supported_os
+        run: echo ${{ steps.module_supported_os.outputs.MODULE_SUPPORTED_OS }}
+
+      - name: determine if ${{inputs.module_name}} ${{inputs.module_version}} support for ${{inputs.cluster_version}}
+        id: module_supported_cluster
+        run: |
+          echo 'MODULE_SUPPORTED_CLUSTER=$(invoke -c my_tasks determine-module-version-support-cluster --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" --cluster-version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
+      - name: EXAMPLE get module_supported_cluster
+        run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
+
 
       # set a variable only if cluster / os / module_version combination is supported
       # - name: 
@@ -65,16 +79,37 @@ jobs:
       #   if: ${{steps.os_supported.outputs.OS_SUPPORTED == "YES" && steps.....}}
       #   run:
 
-      - name: echo all the things
-        run: |
-          echo ${{inputs.os}} is the OS
-          echo ${{inputs.cluster_version}} is the cluster_version
-          echo ${{inputs.module_version}} is the module_version
-          echo ${{inputs.module_name}} is the module_name
+#       - name: run
+#         if: ${{steps.supported.outputs.FULLY_SUPPORTED = 'yes'}}
+#         run: |
+#           echo
+#       - name: star the cluster
+# # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
+#         run: |
+#           invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
+#             --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
+#             --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
+#             --public-ssh-key-path="./ssh.publickey" \
+#             --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
+#             --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
+#             --os=${{inputs.os}}
 
-      # - name: run
-      #   if: ${{steps.supported.outputs.FULLY_SUPPORTED = 'yes'}}
-      #   run: |
-      #     echo
-      # - name: star the cluster
-      # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
+#       - name: Display cluster connection details
+#         if: ${{ inputs.ci == false }}
+#         run: |
+#           invoke -c env0_tasks env-details
+
+#       - name: Validate cluster ssh
+#         if: ${{ inputs.ci == false }}
+#         run: |
+#           md5sum ssh.privatekey
+#           ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .cluster_name.value) ls
+#           ssh -o "StrictHostKeyChecking no" -i ssh.privatekey ubuntu@$(cat env0_cluster_config.yml |yq .public_ips.value[0]) ls
+
+#       - name: run the tests
+#         if: ${{ inputs.report == false && inputs.ci == false }}
+#         run: |
+#           invoke -c env0_tasks run-tests --ssh-private-key=ssh.privatekey \
+#             --pytest-options "${{ inputs.pytest_options}}" \
+#             --aws-access-key=${{ secrets.CTO_AUTOMATION_AWS_ACCESS_KEY }} \
+#             --aws-secret-key=${{ secrets.CTO_AUTOMATION_AWS_SECRET_KEY }}

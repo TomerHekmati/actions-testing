@@ -1,9 +1,3 @@
-# OS:
-#   'xenial': 'xenial-amd64-aws'
-#   'bionic': 'bionic-amd64-aws'
-#   'focal': 'focal-amd64-aws'
-#   'rhel7': 'rhel7.5-x86_64-aws'
-#   'rhel8': 'rhel8-x86_64-aws'
 OS:
   - 'xenial'
   - 'bionic'
