@@ -99,7 +99,7 @@ jobs:
 
       - name: Read OS file
         id: os_list
-        run: echo "{os}=${(cat oschoice)}" >> $GITHUB_OUTPUT
+        run: echo "{os}<<${(cat oschoice)}" >> $GITHUB_OUTPUT
 
       - run: echo $OSCHOICE
         env:
