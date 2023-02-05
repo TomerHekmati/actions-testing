@@ -36,7 +36,7 @@ jobs:
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          eecho OS_SUPPORTED=yes >> $GITHUB_OUTPUT
+          echo OS_SUPPORTED=yes >> $GITHUB_OUTPUT
           echo "HERE I FIND OUT IF I AM RELEASED FOR ${{inputs.os}}"
 
       # run the python script, it should exit 0 || 1
