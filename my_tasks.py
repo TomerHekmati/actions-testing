@@ -79,8 +79,8 @@ def set_permutations(
     cluster_versions = []
     for rs_ver in rs_versions:
         if version_format_refactor(rs_ver) >= version_format_refactor(min_cluster_version):
-            print(rs_ver)
             cluster_versions.append(rs_ver)
+    print(*cluster_versions)
     # print(f'Final cluster versions to test: {cluster_versions}')
     # return cluster_versions
     # chosen_os_list = []
