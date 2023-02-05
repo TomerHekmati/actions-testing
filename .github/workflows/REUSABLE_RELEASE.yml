@@ -1,0 +1,65 @@
+---
+
+on:
+
+  workflow_call:
+      os:
+        description: "operating system for the redis cluster"
+        required: true
+        type: string
+      cluster_version:
+        description: "redis cluster version"
+        required: true
+        type: string
+      module_version:
+        description: "The module version"
+        required: true
+        type: string
+      module_name:
+        description: "Redis module name"
+        required: true
+        type: string
+
+jobs:
+
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+
+      # somehow get his from s3 || jenkins || whatever
+      - name: get build number for cluster ${{inputs.cluster_version}}
+        id: build_number
+        run: |
+          echo "HERE I GET THE BUILD NUMBER SOMEHOW"
+
+      - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
+        id: os_supported
+        run: |
+          eecho OS_SUPPORTED=yes >> $GITHUB_OUTPUT
+          echo "HERE I FIND OUT IF I AM RELEASED FOR ${{inputs.os}}"
+
+      # run the python script, it should exit 0 || 1
+      - name: determine if we can test this module on this cluster version
+        id: module_supported
+        run: |
+          echo foo
+
+      # set a variable only if cluster / os / module_version combination is supported
+      # - name: 
+      #   id: supported
+      #   if: ${{steps.os_supported.outputs.OS_SUPPORTED == "YES" && steps.....}}
+      #   run:
+
+      - name: echo all the things
+        run: |
+          echo ${{inputs.os}} is the OS
+          echo ${{inputs.cluster_version}} is the cluster_version
+          echo ${{inputs.module_version}} is the module_version
+          echo ${{inputs.module_name}} is the module_name
+
+      # - name: run
+      #   if: ${{steps.supported.outputs.FULLY_SUPPORTED = 'yes'}}
+      #   run: |
+      #     echo
+      # - name: star the cluster
+      # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
