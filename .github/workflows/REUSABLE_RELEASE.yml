@@ -72,13 +72,6 @@ jobs:
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
-
-      # set a variable only if cluster / os / module_version combination is supported
-      # - name: 
-      #   id: supported
-      #   if: ${{steps.os_supported.outputs.OS_SUPPORTED == "YES" && steps.....}}
-      #   run:
-
       - name: run
         if: ${{ steps.os_supported.outputs.OS_SUPPORTED = "True" && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS = "True" && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER = "True"}}
         run: |
