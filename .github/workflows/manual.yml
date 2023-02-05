@@ -101,7 +101,7 @@ jobs:
         id: os_list
         run: echo "os=`cat oschoice`" >> $GITHUB_OUTPUT
 
-      - run: TEST TOMER echo $OSCHOICE
+      - run: echo $OSCHOICE
         env:
           OSCHOICE: ${{ steps.os_list.outputs.os }}
       
