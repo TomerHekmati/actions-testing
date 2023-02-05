@@ -56,7 +56,7 @@ jobs:
           echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
           echo "HERE I FIND OUT IF I AM RELEASED FOR ${{inputs.os}}"
       - name: EXAMPLE get os_supported
-        run: echo ${{ steps.build_number.outputs.OS_SUPPORTED }}
+        run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
       # run the python script, it should exit 0 || 1
       - name: determine if we can test this module on this cluster version
