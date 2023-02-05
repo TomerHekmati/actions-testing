@@ -101,12 +101,12 @@ jobs:
         id: os_list
         run: echo "os=`cat oschoice`" >> $GITHUB_OUTPUT
 
-      - run: echo $OSCHOICE
+      - run: TEST TOMER echo $OSCHOICE
         env:
           OSCHOICE: ${{ steps.os_list.outputs.os }}
       
-      - run: ${{ env.os }}
-
+      - name: TEST TOMER Display each OS if
+        run: for i in ${{ steps.os_list.outputs.os }}; do echo $i; done 
 # from working repo: "OSCHOICE=`cat oschoice.txt`" >> $GITHUB_OUTPUT
 
 # worked! _> OSCHOICE: "I am tomer"
