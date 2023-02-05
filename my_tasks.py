@@ -2,7 +2,7 @@ import os
 import sys
 from urllib.request import urlopen
 import re
-from invoke import task
+from invoke import task, run
 import yaml
 
 
@@ -108,4 +108,5 @@ def get_cluster_version_build(
     with open("parameters.yaml") as file:
         parameters = yaml.full_load(file)
         cluster_version = parameters["RS_VERSIONS"][cluster_version]["build"]
-        print(cluster_version)
+        # print(cluster_version)
+        run(f"echo {cluster_version}")
