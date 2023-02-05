@@ -73,9 +73,9 @@ jobs:
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
       - name: check1
-        if: 1 == 1
+        # if: 1 == 1
         run: |
-          echo "check1 is done"
+          echo check1 is done
       - name: check2
         if: '1' == '1'
         run: |
