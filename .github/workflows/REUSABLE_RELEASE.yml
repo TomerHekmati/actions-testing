@@ -54,11 +54,12 @@ jobs:
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}" > os_supported_file
+          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+# invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}" > os_supported_file
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
-      # - name: EXAMPLE get os_supported
-        # run: echo ${{ env.OS_SUPPORTED }}
+      - name: EXAMPLE get os_supported
+        run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 # run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
       - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
@@ -96,10 +97,10 @@ jobs:
       #     echo check4 is done
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
-      # - name: check5
-      #   if:  ${{ env.OS_SUPPORTED == 'True\r' }}
-      #   run: |
-      #     echo check5 is done
+      - name: check5
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True'
+        run: |
+          echo check5 is done
       # - name: run
       #   if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
       #   run: |
