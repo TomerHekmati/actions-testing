@@ -76,16 +76,18 @@ jobs:
       #   if: '1' == '1'
       #   run: |
       #     echo check2 is done
-      - name: check3
-        if: True
-        run: |
-          echo check3 is done
-      - name: check4
-        if: 'True'
-        run: |
-          echo check4 is done
+      # work:
+      # - name: check3
+      #   if: True
+      #   run: |
+      #     echo check3 is done
+      # does not work
+      # - name: check4
+      #   if: 'True'
+      #   run: |
+      #     echo check4 is done
       - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true'}}
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == true}}
         run: |
           echo check5 is done
       - name: run
