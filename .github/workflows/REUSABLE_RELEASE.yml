@@ -79,7 +79,7 @@ jobs:
       - name: check6
         env:
           OS_SUPPORTED_: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
-        if:  $OS_SUPPORTED_  == 'True'
+        # if:  $OS_SUPPORTED_  == 'True'
         run: |
           echo check5 is done; echo $OS_SUPPORTED_
 
