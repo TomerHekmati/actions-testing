@@ -72,10 +72,10 @@ jobs:
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
-      - name: check2
-        if: '1' == '1'
-        run: |
-          echo check2 is done
+      # - name: check2
+      #   if: '1' == '1'
+      #   run: |
+      #     echo check2 is done
       - name: check3
         if: True
         run: |
