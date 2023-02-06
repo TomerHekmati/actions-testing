@@ -86,8 +86,9 @@ jobs:
       #   if: 'True'
       #   run: |
       #     echo check4 is done
+      # didn't enter the if when == true, 
       - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == true}}
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == True}}
         run: |
           echo check5 is done
       - name: run
