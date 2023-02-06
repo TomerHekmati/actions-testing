@@ -54,10 +54,11 @@ jobs:
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
+          invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' > os_supported_file
+# echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
-      - name: EXAMPLE get os_supported
-        run: echo ${{ env.OS_SUPPORTED }}
+      # - name: EXAMPLE get os_supported
+        # run: echo ${{ env.OS_SUPPORTED }}
 # run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
       - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
@@ -74,11 +75,17 @@ jobs:
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
+
+      - name: get new os_supported_file
+        run: cat os_supported_file
+      - name: if test
+        if: (cat os_supported_file) == 'True'
+        run: echo yay!
       # work:
-      - name: check3
-        if: True
-        run: |
-          echo check3 is done
+      # - name: check3
+      #   if: True
+      #   run: |
+      #     echo check3 is done
       # - name: EXAMPLE get os_supported without echo
       #   run: ${{ env.OS_SUPPORTED }}
       # does not work
@@ -88,14 +95,14 @@ jobs:
       #     echo check4 is done
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
-      - name: check5
-        if:  ${{ env.OS_SUPPORTED == 'True\r' }}
-        run: |
-          echo check5 is done
-      - name: run
-        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
-        run: |
-          echo We can run tests
+      # - name: check5
+      #   if:  ${{ env.OS_SUPPORTED == 'True\r' }}
+      #   run: |
+      #     echo check5 is done
+      # - name: run
+      #   if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
+      #   run: |
+      #     echo We can run tests
       # - name: check1
       #   if: 1 == 1
       #   run: echo "check1 is done"
