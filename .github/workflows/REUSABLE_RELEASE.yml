@@ -54,7 +54,8 @@ jobs:
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
+# echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
       - name: EXAMPLE get os_supported
         run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
@@ -87,7 +88,7 @@ jobs:
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
       - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED}}
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' }}
         run: |
           echo check5 is done
       - name: run
