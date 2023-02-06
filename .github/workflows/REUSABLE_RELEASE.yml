@@ -77,8 +77,8 @@ jobs:
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
 
-      - name: get new os_supported_file
-        run: cat os_supported_file
+      # - name: get new os_supported_file
+        # run: cat os_supported_file
       # - name: if test
         # if: (cat os_supported_file) == 'True'
         # run: echo yay!
