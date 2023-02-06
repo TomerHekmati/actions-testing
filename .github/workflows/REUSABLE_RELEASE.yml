@@ -47,15 +47,14 @@ jobs:
       - name: get build number for cluster ${{inputs.cluster_version}}
         id: build_number
         run: |
-          echo BUILD_NUMBER=`invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}"` >> $GITHUB_OUTPUT
+          echo 'BUILD_NUMBER=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")' >> $GITHUB_OUTPUT
       - name: EXAMPLE get build number
         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
 
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          echo OS_SUPPORTED='invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}"' >> $GITHUB_OUTPUT
-# echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
       - name: EXAMPLE get os_supported
         run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
@@ -87,10 +86,10 @@ jobs:
       #   if: 'True'
       #   run: |
       #     echo check4 is done
-      # didn't enter the if when == true, 'True',
+      # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
       - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true'}}
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED}}
         run: |
           echo check5 is done
       - name: run
