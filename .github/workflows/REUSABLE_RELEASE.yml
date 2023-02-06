@@ -76,6 +76,12 @@ jobs:
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
+      - name: check6
+        env:
+          OS_SUPPORTED_: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+        if:  $OS_SUPPORTED_  == 'True'
+        run: |
+          echo check5 is done; echo $OS_SUPPORTED_
 
       # - name: get new os_supported_file
         # run: cat os_supported_file
@@ -97,10 +103,10 @@ jobs:
       #     echo check4 is done
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
-      - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED  == 'True' }}
-        run: |
-          echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+      # - name: check5
+      #   if:  ${{ steps.os_supported.outputs.OS_SUPPORTED  == 'True' }}
+      #   run: |
+      #     echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
       # - name: run
       #   if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
       #   run: |
