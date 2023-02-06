@@ -79,8 +79,8 @@ jobs:
         if: True
         run: |
           echo check3 is done
-      - name: EXAMPLE get os_supported without echo
-        run: ${{ env.OS_SUPPORTED }}
+      # - name: EXAMPLE get os_supported without echo
+      #   run: ${{ env.OS_SUPPORTED }}
       # does not work
       # - name: check4
       #   if: 'True'
@@ -89,7 +89,7 @@ jobs:
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
       - name: check5
-        if:  ${{ env.OS_SUPPORTED == 'True' }}
+        if:  ${{ env.OS_SUPPORTED == 'True\r' }}
         run: |
           echo check5 is done
       - name: run
