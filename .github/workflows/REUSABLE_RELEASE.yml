@@ -78,9 +78,10 @@ jobs:
 
       - name: get new os_supported_file
         run: cat os_supported_file
-      - name: if test
-        if: (cat os_supported_file) == 'True'
-        run: echo yay!
+      # - name: if test
+        # if: (cat os_supported_file) == 'True'
+        # run: echo yay!
+
       # work:
       # - name: check3
       #   if: True
