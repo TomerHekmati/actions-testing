@@ -77,10 +77,10 @@ jobs:
       #   run: |
       #     echo check2 is done
       # work:
-      # - name: check3
-      #   if: True
-      #   run: |
-      #     echo check3 is done
+      - name: check3
+        if: True
+        run: |
+          echo check3 is done
       # does not work
       # - name: check4
       #   if: 'True'
