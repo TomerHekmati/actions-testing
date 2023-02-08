@@ -54,7 +54,11 @@ jobs:
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
-          echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+          output=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}" 
+          echo "::set-output name=OS_SUPPORTED::$output"
 # invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}" > os_supported_file
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
