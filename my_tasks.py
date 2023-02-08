@@ -157,4 +157,5 @@ def determine_module_version_support_cluster(
 ):
     min_cluster_version = get_min_redis_pack_version(module_version, module_name)
     supported = True if version_format_refactor(cluster_version) >= version_format_refactor(min_cluster_version) else False
-    run(f"echo {supported}", pty=True)
+    # run(f"echo {supported}", pty=True)
+    print(supported,)

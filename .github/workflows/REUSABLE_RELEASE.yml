@@ -48,20 +48,16 @@ jobs:
         id: build_number
         run: |
           output=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
           echo "BUILD_NUMBER=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get build number
         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
-
+# output="${output//'%'/'%25'}"
+# output="${output//$'\n'/'%0A'}"
+# output="${output//$'\r'/''}"
       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
         id: os_supported
         run: |
           output=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
           echo "OS_SUPPORTED=$output" >> $GITHUB_OUTPUT
 
 # output="${output//$'\r'/'%0D'}"
@@ -71,15 +67,11 @@ jobs:
 # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
       - name: EXAMPLE get os_supported
         run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
-# run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
       - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
         id: module_supported_os
         run: |
           output=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
           echo "MODULE_SUPPORTED_OS=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get module_supported_os
         run: echo ${{ steps.module_supported_os.outputs.MODULE_SUPPORTED_OS }}
@@ -88,57 +80,15 @@ jobs:
         id: module_supported_cluster
         run: |
           output=$(invoke -c my_tasks determine-module-version-support-cluster --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" --cluster-version="${{ inputs.cluster_version }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
           echo "MODULE_SUPPORTED_CLUSTER=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
-      - name: check6
-        env:
-          OS_SUPPORTED_: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
-        # if:  $OS_SUPPORTED_  == 'True'
-        run: |
-          echo check5 is done; echo $OS_SUPPORTED_
-
-      # - name: get new os_supported_file
-        # run: cat os_supported_file
-      # - name: if test
-        # if: (cat os_supported_file) == 'True'
-        # run: echo yay!
-
-      # work:
-      # - name: check3
-      #   if: True
-      #   run: |
-      #     echo check3 is done
-      # - name: EXAMPLE get os_supported without echo
-      #   run: ${{ env.OS_SUPPORTED }}
-      # does not work
-      # - name: check4
-      #   if: 'True'
-      #   run: |
-      #     echo check4 is done
-      # didn't enter the if when == true, 'True', 'true'
-      # didn't run at all when == True,
-      - name: check5
-        run: |
-          if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True'}};then
-          echo check5 is done, results: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
-          fi
       - name: run final
         run: |
           if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
           echo We can run tests
           fi
-      # - name: check1
-      #   if: 1 == 1
-      #   run: echo "check1 is done"
-      # - name: check2
-      #   if: '1' == '1'
-      #   run: |
-      #     echo check2 is done
 
       # - name: star the cluster
 # example line from chayim
