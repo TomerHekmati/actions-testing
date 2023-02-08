@@ -121,7 +121,7 @@ jobs:
       # didn't run at all when == True,
       - name: check5
         run: |
-          if ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True';then
+          if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True'}};then
           echo check5 is done, results: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
           fi
       - name: run final
