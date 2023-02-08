@@ -98,15 +98,24 @@ jobs:
         id: final_check
         run: |
           if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
-            echo We can run tests; echo "FINAL_CHECK=true" >> $GITHUB_OUTPUT
+            echo can run tests; echo "FINAL_CHECK=true" >> $GITHUB_OUTPUT
           else
-            echo We can NOT run tests; echo "FINAL_CHECK=false" >> $GITHUB_OUTPUT
+            echo can NOT run tests, missing env support; echo "FINAL_CHECK=false" >> $GITHUB_OUTPUT
           fi
 
       - name: are we still running
         if : ${{ steps.final_check.outputs.FINAL_CHECK == 'true' }}
         run: |
-          echo YES!
+          invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
+            --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
+            --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
+            --public-ssh-key-path="./ssh.publickey" \
+            --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
+            --rs-version ${{inputs.cluster_version}}-{{steps.build_number.outputs.BUILD_NUMBER}} \
+            --os=${{inputs.os}}
+
+
+
 # example line from chayim
 # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
       # - name: star the cluster
@@ -119,10 +128,10 @@ jobs:
       #       --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
       #       --os=${{inputs.os}}
 
-      # - name: Display cluster connection details
-      #   if: ${{ inputs.ci == false }}
-      #   run: |
-      #     invoke -c env0_tasks env-details
+      - name: Display cluster connection details
+        if: ${{ inputs.ci == false }}
+        run: |
+          invoke -c env0_tasks env-details
 
       # - name: Validate cluster ssh
       #   if: ${{ inputs.ci == false }}
