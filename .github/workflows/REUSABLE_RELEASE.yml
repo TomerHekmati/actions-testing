@@ -119,8 +119,8 @@ jobs:
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
       - name: check5
-        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True'
         run: |
+          if ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True';then
           echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
       - name: run final
         if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
