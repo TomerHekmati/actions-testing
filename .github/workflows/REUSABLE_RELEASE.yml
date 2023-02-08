@@ -94,15 +94,22 @@ jobs:
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
-      - name: run final
+      - name: final determine if we run tests
+        id: final_check
         run: |
           if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
-          echo We can run tests
+            echo We can run tests; echo "FINAL_CHECK=true" >> $GITHUB_OUTPUT
+          else
+            echo We can NOT run tests; echo "FINAL_CHECK=false" >> $GITHUB_OUTPUT
           fi
 
-      # - name: star the cluster
+      - name: are we still running
+        if : ${{ steps.final_check.outputs.FINAL_CHECK }}
+        run: |
+          echo YES!
 # example line from chayim
 # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
+      # - name: star the cluster
       #   run: |
       #     invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
       #       --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
