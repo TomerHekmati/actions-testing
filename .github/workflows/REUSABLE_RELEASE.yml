@@ -60,6 +60,7 @@ jobs:
           output=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
           echo "OS_SUPPORTED=$output" >> $GITHUB_OUTPUT
 
 # output="${output//$'\r'/'%0D'}"
@@ -121,7 +122,7 @@ jobs:
       - name: check5
         run: |
           if ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True';then
-          echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+          echo check5 is done, results: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
           fi
       - name: run final
         if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
