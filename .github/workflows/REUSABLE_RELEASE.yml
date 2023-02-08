@@ -118,12 +118,12 @@ jobs:
       #     echo check4 is done
       # didn't enter the if when == true, 'True', 'true'
       # didn't run at all when == True,
-      # - name: check5
-      #   if:  ${{ steps.os_supported.outputs.OS_SUPPORTED  == 'True' }}
-      #   run: |
-      #     echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+      - name: check5
+        if:  ${{ steps.os_supported.outputs.OS_SUPPORTED  == 'True' }}
+        run: |
+          echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
       - name: run final
-        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}}
+        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
         run: |
           echo We can run tests
       # - name: check1
