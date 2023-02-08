@@ -122,6 +122,7 @@ jobs:
         run: |
           if ${{ steps.os_supported.outputs.OS_SUPPORTED }} == 'True';then
           echo check5 is done; echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+          fi
       - name: run final
         if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
         run: |
