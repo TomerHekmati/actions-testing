@@ -50,6 +50,7 @@ jobs:
           output=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/''}"
           echo "BUILD_NUMBER=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get build number
         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
@@ -78,6 +79,7 @@ jobs:
           output=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/''}"
           echo "MODULE_SUPPORTED_OS=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get module_supported_os
         run: echo ${{ steps.module_supported_os.outputs.MODULE_SUPPORTED_OS }}
@@ -88,6 +90,7 @@ jobs:
           output=$(invoke -c my_tasks determine-module-version-support-cluster --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" --cluster-version="${{ inputs.cluster_version }}")
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/''}"
           echo "MODULE_SUPPORTED_CLUSTER=$output" >> $GITHUB_OUTPUT
       - name: EXAMPLE get module_supported_cluster
         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
@@ -125,9 +128,10 @@ jobs:
           echo check5 is done, results: ${{ steps.os_supported.outputs.OS_SUPPORTED }}
           fi
       - name: run final
-        if: ${{ steps.os_supported.outputs.OS_SUPPORTED == 'true' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'true' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'true'}}
         run: |
+          if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
           echo We can run tests
+          fi
       # - name: check1
       #   if: 1 == 1
       #   run: echo "check1 is done"
