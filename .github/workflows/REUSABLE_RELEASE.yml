@@ -104,7 +104,7 @@ jobs:
           fi
 
       - name: are we still running
-        if : ${{ steps.final_check.outputs.FINAL_CHECK }}
+        if : ${{ steps.final_check.outputs.FINAL_CHECK == 'true' }}
         run: |
           echo YES!
 # example line from chayim
