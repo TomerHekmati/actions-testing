@@ -36,11 +36,11 @@ jobs:
       - id: value
         uses: ASzc/change-string-case-action@v5
         with:
-          value: ${{inputs.module_version}}
+          value: ${{inputs.module_name}}
       - name: echo uppercase
         run: |
           echo ${{ steps.name.outputs }}
-          echo --REDIS${{ steps.value.outputs.toUpperCase }}_VERSION=${{inputs.module_version}}
+          echo --REDIS${{ steps.value.outputs.uppercase }}_VERSION=${{inputs.module_version}}
 #       - name: download lfs dependencies
 #         uses: actions/checkout@v3
 #         with:
