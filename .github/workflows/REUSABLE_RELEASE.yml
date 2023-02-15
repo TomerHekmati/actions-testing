@@ -34,7 +34,7 @@ jobs:
           echo ${{inputs.module_name}} is the module_name
       - name: echo uppercase
         run: |
-          echo --REDIS${{ inputs.module_name }}_VERSION=${{inputs.module_version}}
+          echo --REDIS${{ inputs.module_name.uppercase }}_VERSION=${{inputs.module_version}}
 #       - name: download lfs dependencies
 #         uses: actions/checkout@v3
 #         with:
