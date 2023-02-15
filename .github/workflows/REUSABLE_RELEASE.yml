@@ -32,106 +32,107 @@ jobs:
           echo ${{inputs.cluster_version}} is the cluster_version
           echo ${{inputs.module_version}} is the module_version
           echo ${{inputs.module_name}} is the module_name
+      - name: echo uppercase
+        echo --REDIS${{ inputs.module_name.toUpperCase }}_VERSION=${{inputs.module_version}}"
+#       - name: download lfs dependencies
+#         uses: actions/checkout@v3
+#         with:
+#           lfs: true
+#       - name: Checkout LFS objects
+#         run: git lfs checkout
+#       - name: invoke install
+#         run: |
+#           pip install --upgrade pip invoke
 
-      - name: download lfs dependencies
-        uses: actions/checkout@v3
-        with:
-          lfs: true
-      - name: Checkout LFS objects
-        run: git lfs checkout
-      - name: invoke install
-        run: |
-          pip install --upgrade pip invoke
+#       # somehow get his from s3 || jenkins || whatever
+#       - name: get build number for cluster ${{inputs.cluster_version}}
+#         id: build_number
+#         run: |
+#           output=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")
+#           output="${output//'%'/'%25'}"
+#           output="${output//$'\n'/'%0A'}"
+#           output="${output//$'\r'/''}"
+#           echo "BUILD_NUMBER=$output" >> $GITHUB_OUTPUT
+#       - name: EXAMPLE get build number
+#         run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
 
-      # somehow get his from s3 || jenkins || whatever
-      - name: get build number for cluster ${{inputs.cluster_version}}
-        id: build_number
-        run: |
-          output=$(invoke -c my_tasks get-cluster-version-build --cluster-version="${{ inputs.cluster_version }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
-          echo "BUILD_NUMBER=$output" >> $GITHUB_OUTPUT
-      - name: EXAMPLE get build number
-        run: echo ${{ steps.build_number.outputs.BUILD_NUMBER }}
+#       - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
+#         id: os_supported
+#         run: |
+#           output=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")
+#           output="${output//'%'/'%25'}"
+#           output="${output//$'\n'/'%0A'}"
+#           output="${output//$'\r'/''}"
+#           echo "OS_SUPPORTED=$output" >> $GITHUB_OUTPUT
 
-      - name: determine if ${{inputs.os}} support for ${{inputs.cluster_version}}
-        id: os_supported
-        run: |
-          output=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
-          echo "OS_SUPPORTED=$output" >> $GITHUB_OUTPUT
+# # output="${output//$'\r'/'%0D'}"
+# # echo "::set-output name=OS_SUPPORTED::$output"
+# # invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}" > os_supported_file
+# # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
+# # echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
+#       - name: EXAMPLE get os_supported
+#         run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
 
-# output="${output//$'\r'/'%0D'}"
-# echo "::set-output name=OS_SUPPORTED::$output"
-# invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}" > os_supported_file
-# echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_ENV
-# echo 'OS_SUPPORTED=$(invoke -c my_tasks determine-cluster-support-os --cluster-version="${{ inputs.cluster_version }}" --os="${{ inputs.os }}")' >> $GITHUB_OUTPUT
-      - name: EXAMPLE get os_supported
-        run: echo ${{ steps.os_supported.outputs.OS_SUPPORTED }}
+#       - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
+#         id: module_supported_os
+#         run: |
+#           output=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")
+#           output="${output//'%'/'%25'}"
+#           output="${output//$'\n'/'%0A'}"
+#           output="${output//$'\r'/''}"
+#           echo "MODULE_SUPPORTED_OS=$output" >> $GITHUB_OUTPUT
+#       - name: EXAMPLE get module_supported_os
+#         run: echo ${{ steps.module_supported_os.outputs.MODULE_SUPPORTED_OS }}
 
-      - name: determine if ${{inputs.module_name}} support for ${{inputs.os}}
-        id: module_supported_os
-        run: |
-          output=$(invoke -c my_tasks determine-module-support-os --module-name="${{ inputs.module_name }}" --os="${{ inputs.os }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
-          echo "MODULE_SUPPORTED_OS=$output" >> $GITHUB_OUTPUT
-      - name: EXAMPLE get module_supported_os
-        run: echo ${{ steps.module_supported_os.outputs.MODULE_SUPPORTED_OS }}
+#       - name: determine if ${{inputs.module_name}} ${{inputs.module_version}} support for ${{inputs.cluster_version}}
+#         id: module_supported_cluster
+#         run: |
+#           output=$(invoke -c my_tasks determine-module-version-support-cluster --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" --cluster-version="${{ inputs.cluster_version }}")
+#           output="${output//'%'/'%25'}"
+#           output="${output//$'\n'/'%0A'}"
+#           output="${output//$'\r'/''}"
+#           echo "MODULE_SUPPORTED_CLUSTER=$output" >> $GITHUB_OUTPUT
+#       - name: EXAMPLE get module_supported_cluster
+#         run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
 
-      - name: determine if ${{inputs.module_name}} ${{inputs.module_version}} support for ${{inputs.cluster_version}}
-        id: module_supported_cluster
-        run: |
-          output=$(invoke -c my_tasks determine-module-version-support-cluster --module-name="${{ inputs.module_name }}" --module-version="${{ inputs.module_version }}" --cluster-version="${{ inputs.cluster_version }}")
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/''}"
-          echo "MODULE_SUPPORTED_CLUSTER=$output" >> $GITHUB_OUTPUT
-      - name: EXAMPLE get module_supported_cluster
-        run: echo ${{ steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER }}
+#       - name: final determine if we run tests
+#         id: final_check
+#         run: |
+#           if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
+#             echo can run tests; echo "FINAL_CHECK=true" >> $GITHUB_OUTPUT
+#           else
+#             echo can NOT run tests, missing env support; echo "FINAL_CHECK=false" >> $GITHUB_OUTPUT
+#           fi
 
-      - name: final determine if we run tests
-        id: final_check
-        run: |
-          if ${{ steps.os_supported.outputs.OS_SUPPORTED == 'True' && steps.module_supported_os.outputs.MODULE_SUPPORTED_OS == 'True' && steps.module_supported_cluster.outputs.MODULE_SUPPORTED_CLUSTER == 'True'}};then
-            echo can run tests; echo "FINAL_CHECK=true" >> $GITHUB_OUTPUT
-          else
-            echo can NOT run tests, missing env support; echo "FINAL_CHECK=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: are we still running
-        if : ${{ steps.final_check.outputs.FINAL_CHECK == 'true' }}
-        run: |
-          invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
-            --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
-            --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
-            --public-ssh-key-path="./ssh.publickey" \
-            --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
-            --rs-version ${{inputs.cluster_version}}-{{steps.build_number.outputs.BUILD_NUMBER}} \
-            --os=${{inputs.os}}
+#       - name: are we still running
+#         if : ${{ steps.final_check.outputs.FINAL_CHECK == 'true' }}
+#         run: |
+#           invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
+#             --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
+#             --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
+#             --public-ssh-key-path="./ssh.publickey" \
+#             --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
+#             --rs-version ${{inputs.cluster_version}}-{{steps.build_number.outputs.BUILD_NUMBER}} \
+#             --os=${{inputs.os}}
 
 
 
-# example line from chayim
-# run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
-      # - name: star the cluster
-      #   run: |
-      #     invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
-      #       --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
-      #       --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
-      #       --public-ssh-key-path="./ssh.publickey" \
-      #       --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
-      #       --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
-      #       --os=${{inputs.os}}
+# # example line from chayim
+# # run: invoke -c env0_tasks --cluster-version ${{inputs.cluster_version}}.{{steps.build_number.outputs.BUILD_NUMBER}}
+#       # - name: star the cluster
+#       #   run: |
+#       #     invoke -c env0_tasks setup-cluster --env0-token="${{ secrets.ENV0_TOKEN }}" \
+#       #       --env0-org-id="${{ secrets.ENV0_ORG_ID }}" \
+#       #       --env0-project-id="${{ secrets.ENV0_PROJECT_ID}}" \
+#       #       --public-ssh-key-path="./ssh.publickey" \
+#       #       --blueprint-id="${{secrets.ENV0_BLUEPRINT_ID}}" \
+#       #       --nodes=${{ inputs.nodes }} --aws-instance-type=${{ inputs.node_size }} \
+#       #       --os=${{inputs.os}}
 
-      - name: Display cluster connection details
-        if: ${{ inputs.ci == false }}
-        run: |
-          invoke -c env0_tasks env-details
+#       - name: Display cluster connection details
+#         if: ${{ inputs.ci == false }}
+#         run: |
+#           invoke -c env0_tasks env-details
 
       # - name: Validate cluster ssh
       #   if: ${{ inputs.ci == false }}
