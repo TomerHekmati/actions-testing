@@ -32,9 +32,12 @@ jobs:
           echo ${{inputs.cluster_version}} is the cluster_version
           echo ${{inputs.module_version}} is the module_version
           echo ${{inputs.module_name}} is the module_name
+
+      - name: Change String Case
+        uses: ASzc/change-string-case-action@v5
       - name: echo uppercase
         run: |
-          echo --REDIS${{ inputs.module_name.toUpperCase }}_VERSION=${{inputs.module_version}}
+          echo --REDIS${{ inputs.module_name.toUpperCase() }}_VERSION=${{inputs.module_version}}
 #       - name: download lfs dependencies
 #         uses: actions/checkout@v3
 #         with:
